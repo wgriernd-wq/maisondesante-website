@@ -99,7 +99,7 @@ body { font-family:var(--font-sans); font-weight:300; color:var(--black); backgr
 /* WELCOME */
 .welcome { padding:8rem 0; background:var(--alabaster); }
 .welcome-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
-.welcome-image { aspect-ratio:4/5; overflow:hidden; }
+.welcome-image { aspect-ratio:4/5; overflow:hidden; max-height:360px; max-width:300px; }
 .welcome-image img { width:100%; height:100%; object-fit:cover; display:block; }
 
 /* BAND */
@@ -109,7 +109,7 @@ body { font-family:var(--font-sans); font-weight:300; color:var(--black); backgr
 /* ABOUT */
 .about { padding:8rem 0; background:var(--white); }
 .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
-.about-portrait { aspect-ratio:3/4; overflow:hidden; background:var(--pale-dogwood); }
+.about-portrait { aspect-ratio:3/4; overflow:hidden; background:var(--pale-dogwood); max-height:380px; max-width:290px; }
 .about-portrait img { width:100%; height:100%; object-fit:cover; }
 .about-pivot { font-family:var(--font-serif); font-style:italic; font-size:1.1rem; color:var(--ebony); opacity:.75; margin-bottom:1.2rem; font-weight:300; letter-spacing:.02em; }
 .about-quote { font-family:var(--font-serif); font-size:1.3rem; font-style:italic; font-weight:300; line-height:1.6; color:var(--ebony); margin-top:2rem; padding-left:1.5rem; border-left:1px solid var(--pale-dogwood); }
@@ -242,12 +242,160 @@ body { font-family:var(--font-sans); font-weight:300; color:var(--black); backgr
   .storefront-grid { grid-template-columns:1fr; }
   .contact-cta { padding:3rem 2rem; }
   .footer-inner { flex-direction:column; gap:1.5rem; text-align:center; }
-  .about-portrait { max-height:500px; }
+  .about-portrait { max-height:340px; }
+  .welcome-image { display:none; }
   .cred-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media (max-width:480px) {
   .cred-grid { grid-template-columns:repeat(2,1fr); }
 }
+
+/* ── SERVICE DROPDOWN ── */
+.nav-dropdown { position:relative; }
+.nav-dropdown > a {
+  display:inline-flex; align-items:center; gap:.35rem; cursor:pointer;
+}
+.nav-dropdown > a::after {
+  content:''; width:0; height:0;
+  border-left:4px solid transparent;
+  border-right:4px solid transparent;
+  border-top:5px solid currentColor;
+  opacity:.65; transition:transform .25s;
+  flex-shrink:0;
+}
+.nav-dropdown.open > a::after { transform:rotate(180deg); opacity:1; }
+
+.nav-drop-menu {
+  display:none;
+  position:absolute; top:calc(100% + 12px); left:50%;
+  transform:translateX(-50%);
+  min-width:300px;
+  background:var(--ebony);
+  border:1px solid rgba(214,187,176,.18);
+  border-top:2px solid var(--pale-dogwood);
+  padding:.4rem 0;
+  z-index:300;
+  box-shadow:0 16px 48px rgba(0,0,0,.4);
+}
+.nav-dropdown.open .nav-drop-menu { display:block; }
+
+.nav-drop-menu a {
+  display:block;
+  padding:.7rem 1.4rem;
+  font-size:.72rem !important;
+  letter-spacing:.14em !important;
+  text-transform:uppercase !important;
+  color:rgba(234,228,216,.72) !important;
+  opacity:1 !important;
+  border-left:2px solid transparent;
+  transition:color .2s, border-color .2s, background .2s;
+  white-space:nowrap;
+  text-decoration:none;
+}
+.nav-drop-menu a:hover {
+  color:var(--alabaster) !important;
+  border-left-color:var(--pale-dogwood);
+  background:rgba(214,187,176,.07);
+}
+/* scrolled state */
+.nav.scrolled .nav-drop-menu { background:var(--black); }
+
+/* mobile: dropdown opens inline */
+@media (max-width:880px) {
+  .nav-drop-menu {
+    position:static; transform:none;
+    min-width:unset; box-shadow:none;
+    border:none; border-left:2px solid var(--pale-dogwood);
+    margin:0 0 .5rem 1rem; padding:.2rem 0;
+    background:rgba(214,187,176,.06);
+  }
+  .nav-drop-menu a { padding:.45rem .9rem; font-size:.68rem !important; }
+  .nav-dropdown { width:100%; }
+}
+
+/* ── SERVICE DETAIL SECTIONS ── */
+.service-detail { padding:7rem 0; }
+.service-detail--dark  { background:var(--ebony);  color:var(--alabaster); }
+.service-detail--light { background:var(--white);  color:var(--black); }
+
+.service-detail-grid {
+  display:grid; grid-template-columns:1fr 2fr;
+  gap:5rem; align-items:start;
+}
+@media (max-width:900px) {
+  .service-detail-grid { grid-template-columns:1fr; gap:2.5rem; }
+}
+
+.service-detail-sidebar { position:sticky; top:110px; }
+
+.sd-eyebrow {
+  font-size:.67rem; letter-spacing:var(--track-250);
+  text-transform:uppercase; color:var(--pale-dogwood);
+  margin-bottom:.9rem;
+}
+.sd-name {
+  font-family:var(--font-serif); font-weight:300;
+  font-size:clamp(1.9rem,3.5vw,2.8rem);
+  line-height:1.1; margin-bottom:.6rem;
+}
+.service-detail--dark  .sd-name { color:var(--alabaster); }
+.service-detail--light .sd-name { color:var(--black); }
+
+.sd-tagline {
+  font-size:.72rem; letter-spacing:var(--track-150);
+  text-transform:uppercase; color:var(--pale-dogwood);
+  line-height:1.65; margin-bottom:1.8rem;
+}
+.sd-cta { margin-top:2rem; }
+
+.sd-intro {
+  font-size:.97rem; font-weight:300; line-height:1.85;
+  margin-bottom:1.5rem;
+}
+.service-detail--dark  .sd-intro { color:rgba(234,228,216,.78); }
+.service-detail--light .sd-intro { color:rgba(0,0,0,.65); }
+
+.sd-label {
+  font-size:.67rem; letter-spacing:var(--track-250);
+  text-transform:uppercase; color:var(--pale-dogwood);
+  margin:.1rem 0 .8rem; margin-top:2rem;
+}
+.sd-label:first-child { margin-top:0; }
+
+.sd-list { list-style:none; padding:0; margin-bottom:1rem; }
+.sd-list li {
+  font-size:.9rem; font-weight:300; line-height:1.7;
+  padding:.3rem 0 .3rem 1.2rem; position:relative;
+}
+.service-detail--dark  .sd-list li { color:rgba(234,228,216,.68); }
+.service-detail--light .sd-list li { color:rgba(0,0,0,.6); }
+.sd-list li::before {
+  content:"◆"; position:absolute; left:0;
+  color:var(--pale-dogwood); font-size:.5rem; top:.6rem;
+}
+.sd-list li strong { font-weight:400; }
+.service-detail--dark  .sd-list li strong { color:var(--alabaster); }
+.service-detail--light .sd-list li strong { color:var(--black); }
+
+.sd-inline {
+  font-size:.9rem; font-weight:300; line-height:1.85;
+  margin-bottom:1rem;
+}
+.service-detail--dark  .sd-inline { color:rgba(234,228,216,.68); }
+.service-detail--light .sd-inline { color:rgba(0,0,0,.6); }
+
+.sd-note {
+  font-size:.8rem; line-height:1.7;
+  font-style:italic; opacity:.6; margin-top:.5rem;
+}
+
+/* btn variants */
+.btn-dark {
+  background:var(--ebony); color:var(--alabaster) !important;
+  border:1px solid rgba(234,228,216,.35);
+}
+.btn-dark:hover { background:var(--black); border-color:var(--pale-dogwood); }
+
 </style>
 </head>
 <body>
@@ -264,9 +412,14 @@ body { font-family:var(--font-sans); font-weight:300; color:var(--black); backgr
     </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">Dr. Grier</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#conditions">Conditions</a></li>
-      <li><a href="#journey">Your Journey</a></li>
+      <li class="nav-dropdown" id="navServicesDD">
+        <a href="#services" id="navServicesToggle">Services</a>
+        <div class="nav-drop-menu">
+          <a href="#service-nd">Naturopathic Comprehensive Approach</a>
+          <a href="#service-prime">Maison Prime Membership</a>
+          <a href="#service-fime">Food Intolerance &amp; Metabolic Evaluation</a>
+        </div>
+      </li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener" class="nav-book">Book Now</a></li>
     </ul>
@@ -375,12 +528,12 @@ body { font-family:var(--font-sans); font-weight:300; color:var(--black); backgr
         <div class="cred-label">Peptide Therapy<br>Seeds Scientific</div>
       </div>
       <div class="cred-item">
-        <div class="cred-abbr">IV</div>
-        <div class="cred-label">IV Therapy Certified<br>Oquirrh Mountain</div>
+        <div class="cred-abbr">FI</div>
+        <div class="cred-label">Carroll Food Intolerance<br>Certification</div>
       </div>
       <div class="cred-item">
-        <div class="cred-abbr">WH</div>
-        <div class="cred-label">Women's Health<br>GWU School of Medicine</div>
+        <div class="cred-abbr">RxT</div>
+        <div class="cred-label">Psychiatric Drug Tapering<br>Certification</div>
       </div>
       <div class="cred-item">
         <div class="cred-abbr">MHA</div>
@@ -398,300 +551,124 @@ body { font-family:var(--font-sans); font-weight:300; color:var(--black); backgr
       <h2 class="section-heading">Intelligent Healing for<br>Complex Concerns</h2>
       <p class="section-body">Each protocol begins with your story — synthesized from your intake, symptom patterns, lab data, and goals into a Root-Cause Roadmap. Clinically justified. Never trend-driven.</p>
     </div>
+  </div>
+</section>
 
-    <div class="services-grid">
+<!-- SERVICE: ND COMPREHENSIVE -->
+<section class="service-detail service-detail--dark" id="service-nd">
+  <div class="container">
+    <div class="service-detail-grid fade-in">
 
-      <div class="service-card fade-in">
-        <div class="service-card-num">— I</div>
-        <h3>Peptide Therapy</h3>
-        <p class="service-tag">Compounded · Precision-Dosed · 503A Pharmacy</p>
-        <p>Short chains of amino acids that direct cellular communication, hormone production, tissue repair, and metabolic function — compounded by our Arizona pharmacy partners.</p>
-        <ul>
-          <li>GLP-1 metabolic support — Semaglutide, Tirzepatide</li>
-          <li>Tissue repair &amp; recovery — BPC-157, TB-500</li>
-          <li>Growth hormone support — Sermorelin</li>
-          <li>Cognitive &amp; longevity — Epithalon, Semax, Selank</li>
-          <li>Aesthetic &amp; hair — GHK-Cu, PTD-DBM</li>
-        </ul>
+      <div class="service-detail-sidebar">
+        <div class="sd-eyebrow">— Program I</div>
+        <h2 class="sd-name">Naturopathic<br>Comprehensive<br>Approach</h2>
+        <p class="sd-tagline">Root-Cause Investigation · Functional Diagnostics · Whole-Person Care</p>
+        <div class="sd-cta">
+          <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener" class="btn btn-light">
+            Book in Sanctuary Portal →
+          </a>
+        </div>
       </div>
 
-      <div class="service-card fade-in">
-        <div class="service-card-num">— II</div>
-        <h3>Hormone Optimization</h3>
-        <p class="service-tag">Bioidentical BHRT · Lab-Driven</p>
-        <p>Comprehensive bioidentical hormone replacement for women and men navigating perimenopause, menopause, andropause, and the daily impact of hormonal imbalance.</p>
-        <ul>
-          <li>Estradiol, progesterone, testosterone protocols</li>
-          <li>Thyroid &amp; adrenal optimization</li>
-          <li>Sleep, mood, libido, and energy restoration</li>
-          <li>Ongoing lab monitoring via Fullscript</li>
-        </ul>
-      </div>
+      <div class="service-detail-body">
+        <p class="sd-intro">The most thorough naturopathic evaluation available via telehealth. Your story is reviewed in full — hormonal, cognitive, gut, environmental, and emotional — before a single protocol is written. This is the foundation of the Maison de Santé approach.</p>
 
-      <div class="service-card fade-in">
-        <div class="service-card-num">— III</div>
-        <h3>Functional Diagnostics</h3>
-        <p class="service-tag">Root-Cause Investigation</p>
-        <p>Advanced lab testing that goes beyond conventional ranges to uncover the real story behind your symptoms — hormones, inflammation, gut-brain axis, micronutrients, toxins.</p>
-        <ul>
-          <li>Comprehensive hormone &amp; metabolic panels</li>
-          <li>Gut microbiome &amp; food sensitivity testing</li>
-          <li>Heavy metal &amp; mycotoxin screening</li>
-          <li>Cognitive &amp; neuroinflammation markers</li>
+        <div class="sd-label">The Root-Cause Roadmap™</div>
+        <ul class="sd-list">
+          <li><strong>Discovery Session</strong> — Intake consult; 48-hr advance paperwork review; history, stressors, goals</li>
+          <li><strong>Diagnostic Deep Dive</strong> — Comprehensive functional labs (hormones, gut, toxins, micronutrients)</li>
+          <li><strong>Results Presentation</strong> — Custom Root-Cause Roadmap delivered; protocol co-created with you</li>
+          <li><strong>Restoration Phase</strong> — Botanical support, peptide therapy, or BHRT tailored to your biology</li>
+          <li><strong>Thriving &amp; Longevity</strong> — Ongoing optimization; check-in diagnostics; protocol refinement</li>
         </ul>
-      </div>
 
-      <div class="service-card fade-in">
-        <div class="service-card-num">— IV</div>
-        <h3>Brain Longevity</h3>
-        <p class="service-tag">Cognitive Optimization</p>
-        <p>Protocols designed to prevent cognitive decline, sharpen focus, and protect long-term neurological health — drawing on nootropics, peptides, and lifestyle medicine.</p>
-        <ul>
-          <li>Memory, focus &amp; mental clarity protocols</li>
-          <li>Neuroinflammation reduction</li>
-          <li>Stress resilience &amp; sleep optimization</li>
-          <li>Trauma-informed cognitive support</li>
+        <div class="sd-label">Conditions Addressed</div>
+        <ul class="sd-list">
+          <li>Metabolic &amp; hormonal imbalance · Thyroid &amp; adrenal support</li>
+          <li>Cognitive decline · Brain fog · Neuroinflammation</li>
+          <li>Gut health · Leaky gut · SIBO · IBS · Food intolerances</li>
+          <li>Heavy metal &amp; mold toxicity · Environmental burden</li>
+          <li>Autoimmune &amp; chronic immune conditions · Lyme support</li>
+          <li>Sleep, energy, mood &amp; stress resilience</li>
         </ul>
-      </div>
-
-      <div class="service-card fade-in">
-        <div class="service-card-num">— V</div>
-        <h3>Women's Health</h3>
-        <p class="service-tag">Every Life Chapter · GWU Certified</p>
-        <p>Specialized care for the unique health concerns women navigate — from cycle support and PCOS through perimenopause, menopause, and beyond.</p>
-        <ul>
-          <li>Menstrual cycle &amp; PCOS support</li>
-          <li>Perimenopause &amp; menopause protocols</li>
-          <li>Sexual wellness &amp; libido</li>
-          <li>Postpartum recovery &amp; thyroid health</li>
-        </ul>
-      </div>
-
-      <div class="service-card fade-in">
-        <div class="service-card-num">— VI</div>
-        <h3>Botanical Therapies</h3>
-        <p class="service-tag">Apothecary Medicine · Drop-Ship</p>
-        <p>Traditional herbal medicine and custom tinctures, formulated to your constitution and dispensed through our trusted apothecary partners — directly to your door.</p>
-        <ul>
-          <li>Custom herbal formulations</li>
-          <li>Adaptogens &amp; nervines</li>
-          <li>Carroll Food Intolerance Method (in progress)</li>
-          <li>Eastern + Western herbal traditions unified</li>
-        </ul>
-      </div>
-
-      <div class="service-card fade-in">
-        <div class="service-card-num">— VII</div>
-        <h3>Supplement Dispensary</h3>
-        <p class="service-tag">ModernRx via Fullscript</p>
-        <p>Practitioner-grade supplements dispensed through our curated Fullscript storefront — ModernRx — with patient pricing and direct-to-door delivery.</p>
-        <ul>
-          <li>Pharmaceutical-grade quality</li>
-          <li>Curated by Dr. Grier for your protocol</li>
-          <li>Patient pricing &amp; auto-refill</li>
-          <li>Lab ordering integrated</li>
-        </ul>
-      </div>
-
-      <div class="service-card service-card-coming fade-in">
-        <div class="service-card-num">— VIII <span class="coming-badge">Coming 2026</span></div>
-        <h3>Psychiatric Med Tapering</h3>
-        <p class="service-tag">Integrative Deprescribing</p>
-        <p>Compassionate, structured support for patients seeking to safely taper psychiatric medications under naturopathic and integrative oversight.</p>
-        <ul>
-          <li>Slow, individualized taper protocols</li>
-          <li>Nutrient &amp; botanical bridging support</li>
-          <li>Symptom monitoring &amp; communication</li>
-          <li>Collaborative with prescribing provider</li>
-        </ul>
-      </div>
-
-      <div class="service-card fade-in" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-style:dashed;border-color:rgba(234,228,216,.2);">
-        <p class="section-label" style="color:var(--pale-dogwood)">In-Person Fall 2026</p>
-        <h3 style="margin-bottom:1rem;">IV · Ozone · HBOT<br>&amp; More</h3>
-        <p style="font-size:.85rem;color:rgba(234,228,216,.5);margin-bottom:1.5rem;">Our Scottsdale sanctuary will add IV therapy, ozone-UVBI, PEMF, HOCATT, and advanced on-site modalities when we open our doors.</p>
-        <a href="#contact" class="btn btn-ghost" style="font-size:.7rem;">Join the Waitlist</a>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- CONDITIONS -->
-<section class="conditions" id="conditions">
+<!-- SERVICE: MAISON PRIME -->
+<section class="service-detail service-detail--light" id="service-prime">
   <div class="container">
-    <div class="conditions-header fade-in">
-      <p class="section-label" style="color:var(--ebony)">Clinical Expertise</p>
-      <h2 class="section-heading" style="color:var(--black)">Conditions We Address</h2>
-      <p class="section-body" style="margin:0 auto;color:rgba(0,0,0,.6)">We don't just manage symptoms — we interpret your unique biological story. Whether navigating a high-stakes career, the transitions of motherhood, or aging with intention, our protocols restore vitality from the root.</p>
-    </div>
-    <div class="conditions-grid">
-      <div class="condition-card fade-in">
-        <h3>Metabolic &amp; Hormonal Optimization</h3>
-        <p>Precision care for those seeking to rebalance the body's essential rhythms.</p>
-        <ul>
-          <li>Menopause, Fertility &amp; HRT Optimization</li>
-          <li>Thyroid, Metabolic Vitality &amp; Weight</li>
-          <li>Adrenal &amp; Stress Resilience</li>
-          <li>PCOS &amp; Endocrine Imbalance</li>
-        </ul>
+    <div class="service-detail-grid fade-in">
+
+      <div class="service-detail-sidebar">
+        <div class="sd-eyebrow" style="color:var(--chamoisee)">— Program II</div>
+        <h2 class="sd-name">Maison Prime<br>Membership</h2>
+        <p class="sd-tagline" style="color:var(--chamoisee)">Peptide Therapy &amp; Hormone Optimization · Ongoing Clinical Management</p>
+        <div class="sd-cta">
+          <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener" class="btn btn-dark">
+            Book in Sanctuary Portal →
+          </a>
+        </div>
       </div>
-      <div class="condition-card fade-in">
-        <h3>Cognitive &amp; Neurological Health</h3>
-        <p>Protecting and restoring your greatest asset — your mind.</p>
-        <ul>
-          <li>Brain Fog &amp; Cognitive Decline</li>
-          <li>Headaches &amp; Chronic Fatigue</li>
-          <li>Mood Stabilization Support</li>
-          <li>Drug Tapering Protocols</li>
+
+      <div class="service-detail-body">
+        <p class="sd-intro">Your all-in-one monthly subscription for peptide therapy and bioidentical hormone optimization. One subscription manages everything after your initial intake — ongoing Rx, portal messaging, treatment adjustments, and lab coordination.</p>
+
+        <div class="sd-label" style="color:var(--chamoisee)">What's Included Monthly</div>
+        <ul class="sd-list">
+          <li>Initial intake evaluation to review screening paperwork</li>
+          <li>Monthly Rx refill management to Strive Compounding Pharmacy</li>
+          <li>Unlimited portal messaging via your Sanctuary Portal</li>
+          <li>Ongoing Rx management &amp; treatment adjustment</li>
+          <li>Lab ordering &amp; lab review synced to your chart in your Sanctuary Portal</li>
+          <li>Fullscript supplement access at patient discount</li>
         </ul>
+
+        <div class="sd-label" style="color:var(--chamoisee)">Clinical Focus</div>
+        <p class="sd-inline">GLP-1 metabolic support &nbsp;·&nbsp; Tissue repair &amp; recovery &nbsp;·&nbsp; Growth hormone support &nbsp;·&nbsp; Cognitive &amp; longevity peptides &nbsp;·&nbsp; Aesthetic &amp; hair &nbsp;·&nbsp; Bioidentical hormone replacement (BHRT)</p>
       </div>
-      <div class="condition-card fade-in">
-        <h3>Complex Immunology &amp; Environmental</h3>
-        <p>Navigating the challenges standard medicine most often misses.</p>
-        <ul>
-          <li>Mold Illness &amp; Mycotoxin Recovery</li>
-          <li>Heavy Metal Detoxification</li>
-          <li>Lyme Disease &amp; Autoimmune Support</li>
-          <li>Long COVID &amp; Chronic Immune Dysfunction</li>
-        </ul>
-      </div>
-      <div class="condition-card fade-in">
-        <h3>Gut Health &amp; Digestive Restoration</h3>
-        <p>Restoring the foundation of health from within.</p>
-        <ul>
-          <li>Leaky Gut &amp; Microbiome Repair</li>
-          <li>IBS, GERD, SIBO &amp; Indigestion</li>
-          <li>Candida &amp; Biofilm Protocols</li>
-          <li>Food Intolerance Assessment</li>
-        </ul>
-      </div>
-      <div class="condition-card fade-in">
-        <h3>Longevity &amp; Structural Integrity</h3>
-        <p>Ensuring your physical vessel matches your internal drive.</p>
-        <ul>
-          <li>Anti-Aging &amp; Mitochondrial Health</li>
-          <li>Sports Medicine &amp; Joint Pain</li>
-          <li>Regenerative Protocols</li>
-          <li>Acne, Eczema &amp; Dermatological Roots</li>
-        </ul>
-      </div>
-      <div class="condition-card fade-in">
-        <h3>Sleep, Stress &amp; Lifestyle Medicine</h3>
-        <p>Reclaiming the foundational pillars that every system depends on.</p>
-        <ul>
-          <li>Chronic Poor Sleep &amp; Insomnia</li>
-          <li>HRV &amp; Nervous System Regulation</li>
-          <li>Burnout &amp; Adrenal Fatigue</li>
-          <li>Weight Loss Resistance</li>
-        </ul>
-      </div>
+
     </div>
   </div>
 </section>
 
-<!-- JOURNEY -->
-<section class="journey" id="journey">
+<!-- SERVICE: FI&ME -->
+<section class="service-detail service-detail--dark" id="service-fime">
   <div class="container">
-    <div class="journey-header fade-in">
-      <p class="section-label" style="color:var(--ebony)">Your Path to Restoration</p>
-      <h2 class="section-heading">The Root-Cause<br>Roadmap</h2>
-      <p class="section-body" style="margin:0 auto;color:rgba(0,0,0,.6)">A clinical roadmap designed for the whole person — from first consultation to long-term vitality.</p>
-    </div>
-    <div class="container-narrow">
-      <div class="journey-timeline fade-in">
-        <div class="journey-step">
-          <div class="journey-number"><span>1</span></div>
-          <div class="journey-content">
-            <h3>The Discovery Session</h3>
-            <p>Your experience begins with an intensive deep dive. We don't just look at labs — we look at your life. We discuss your history, your stressors, and your goals to identify the "why" behind your "what."</p>
-            <p>Available now via telehealth. In-person intake sessions launching Fall 2026 in Scottsdale.</p>
-          </div>
-        </div>
-        <div class="journey-step">
-          <div class="journey-number"><span>2</span></div>
-          <div class="journey-content">
-            <h3>The Diagnostic Deep Dive</h3>
-            <p>We use high-level functional testing to map your internal landscape. This isn't standard "insurance-grade" testing — this is precision data. Comprehensive panels covering hormones, gut microbiome, and environmental toxic load, ordered seamlessly via Fullscript Labs.</p>
-          </div>
-        </div>
-        <div class="journey-step">
-          <div class="journey-number"><span>3</span></div>
-          <div class="journey-content">
-            <h3>The Results Presentation</h3>
-            <p>Where science meets soul. We sit down to walk you through the architecture of your health and exactly how we plan to rebuild it — using your custom Root-Cause Roadmap with personalized botanical support, peptide therapy, or bioidentical hormones tailored to your biology.</p>
-          </div>
-        </div>
-        <div class="journey-step">
-          <div class="journey-number"><span>4</span></div>
-          <div class="journey-content">
-            <h3>The Restoration Phase</h3>
-            <p>Healing is an active process. Your protocol is managed through your subscription — monthly Rx refill management, unlimited portal messaging, and treatment adjustments as you evolve. Advanced on-site modalities available Fall 2026.</p>
-          </div>
-        </div>
-        <div class="journey-step">
-          <div class="journey-number"><span>5</span></div>
-          <div class="journey-content">
-            <h3>Thriving &amp; Longevity</h3>
-            <p>Once the foundation is restored, we shift to protection. We monitor your progress with check-in diagnostics to ensure you aren't just feeling better, but are actively slowing the aging process and protecting your cognitive future.</p>
-          </div>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:4rem;" class="fade-in">
-        <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener" class="btn btn-light">Schedule Your Discovery Session</a>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="service-detail-grid fade-in">
 
-<!-- APOTHECARY / MODERNRX -->
-<section class="collections-band" id="apothecary">
-  <div class="container">
-    <div class="collections-header fade-in">
-      <p class="collections-eyebrow">ModernRx · The Dispensary</p>
-      <h2 class="collections-heading">Science-led.<br><em>Botanical-rooted.</em></h2>
-      <p class="collections-sub">Practitioner-grade supplements and custom formulations — curated by Dr. Grier, dispensed through our Fullscript storefront, delivered directly to your door.</p>
-      <div style="margin-top:2.5rem;">
-        <a href="https://us.fullscript.com/welcome/wgrier" target="_blank" rel="noopener" class="btn btn-ghost">Visit ModernRx Dispensary</a>
-      </div>
-    </div>
-    <div class="storefront-grid fade-in">
-      <div class="product-card">
-        <div class="product-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
-        </div>
-        <div class="product-card-content">
-          <h4>The Cognitive Suite</h4>
-          <p>Targeted support for brain longevity, focus, and neuro-protection. Formulated for the high-performing individual who cannot afford cognitive compromise.</p>
+      <div class="service-detail-sidebar">
+        <div class="sd-eyebrow">— Program III</div>
+        <h2 class="sd-name">Food Intolerance &amp;<br>Metabolic Evaluation<br><em style="font-style:italic;font-size:.85em;">(FI&amp;ME)</em></h2>
+        <p class="sd-tagline">Carroll Method · Traditional Naturopathic Technique · All-Inclusive</p>
+        <div class="sd-cta">
+          <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener" class="btn btn-light">
+            Book in Sanctuary Portal →
+          </a>
         </div>
       </div>
-      <div class="product-card">
-        <div class="product-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-        </div>
-        <div class="product-card-content">
-          <h4>The Metabolic Architect</h4>
-          <p>Synergistic blends to support insulin sensitivity, mitochondrial energy, and metabolic resilience — the clinical foundation beneath every weight and energy protocol.</p>
-        </div>
+
+      <div class="service-detail-body">
+        <p class="sd-intro">A personalized naturopathic assessment based on the Carroll Method — a traditional technique developed by Dr. Otis G. Carroll in the 1920s. Trained and certified providers identify the specific food or food combination your body currently has the hardest time digesting and metabolizing.</p>
+
+        <div class="sd-label">Who It's For</div>
+        <p class="sd-intro" style="margin-bottom:.5rem;">Patients dealing with persistent fatigue, bloating, brain fog, skin issues, joint pain, sleep disruption, or chronic inflammation that has not responded to other interventions. Often the missing piece.</p>
+
+        <div class="sd-label">Everything Included</div>
+        <ul class="sd-list">
+          <li>Sample collection — in-office or take-home kit with prepaid return shipping</li>
+          <li>Evaluation by Dr. Grier using the Carroll Method</li>
+          <li>Written personalized report</li>
+          <li>Customized list of foods to support meal planning</li>
+          <li>30-minute follow-up telehealth consultation to review your results</li>
+        </ul>
+
+        <div class="sd-label">Important Note</div>
+        <p class="sd-note">This evaluation is a traditional naturopathic technique, not a laboratory test, allergy test, or medical diagnostic procedure. Patients sign a brief informed-consent acknowledgment before the evaluation begins.</p>
       </div>
-      <div class="product-card">
-        <div class="product-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="product-card-content">
-          <h4>The Botanical Shield</h4>
-          <p>Adaptogens and immune-modulators designed to help the high-performing individual navigate the stressors of career, family, and the modern environment.</p>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </div>
-        <div class="product-card-content">
-          <h4>Hormone &amp; Vitality Support</h4>
-          <p>Practitioner-grade nutraceuticals to support hormonal balance, adrenal resilience, and the foundational systems that govern how you feel every single day.</p>
-        </div>
-      </div>
+
     </div>
   </div>
 </section>
@@ -699,44 +676,27 @@ body { font-family:var(--font-sans); font-weight:300; color:var(--black); backgr
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="container">
-    <div class="contact-grid fade-in">
-      <div class="contact-body">
-        <p class="section-label" style="color:var(--pale-dogwood)">Begin Your Journey</p>
-        <h2 class="contact-heading">Ready to understand<br>your story?</h2>
-        <p class="section-body" style="color:rgba(234,228,216,.65)">Telehealth consultations are available now for Arizona residents. Our in-person Scottsdale clinic opens Fall 2026. Every protocol begins with a conversation.</p>
-        <div class="contact-details">
-          <div class="contact-detail">
-            <span class="contact-detail-label">Book</span>
-            <span class="contact-detail-value">
-              <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener">Schedule via Patient Portal →</a>
-            </span>
-          </div>
-          <div class="contact-detail">
-            <span class="contact-detail-label">Email</span>
-            <span class="contact-detail-value">
-              <a href="mailto:info@maisondesanteinstitute.com">info@maisondesanteinstitute.com</a>
-            </span>
-          </div>
-          <div class="contact-detail">
-            <span class="contact-detail-label">Dispensary</span>
-            <span class="contact-detail-value">
-              <a href="https://us.fullscript.com/welcome/wgrier" target="_blank" rel="noopener">ModernRx via Fullscript →</a>
-            </span>
-          </div>
-          <div class="contact-detail">
-            <span class="contact-detail-label">Location</span>
-            <span class="contact-detail-value">Telehealth — Arizona Residents · Scottsdale Clinic Fall 2026</span>
-          </div>
-          <div class="contact-detail">
-            <span class="contact-detail-label">Payment</span>
-            <span class="contact-detail-value">Cash-Pay · HSA/FSA Accepted</span>
-          </div>
+    <div class="fade-in" style="max-width:640px;">
+      <p class="section-label" style="color:var(--pale-dogwood)">Begin Your Journey</p>
+      <h2 class="contact-heading">Every protocol begins<br>with a conversation.</h2>
+      <p class="section-body" style="color:rgba(234,228,216,.65);margin-bottom:2.5rem;">Telehealth consultations are available now for Arizona residents. Our in-person Scottsdale clinic opens Fall 2026.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <span class="contact-detail-label">Book</span>
+          <span class="contact-detail-value">
+            <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener">Schedule via Patient Sanctuary Portal →</a>
+          </span>
         </div>
-      </div>
-      <div class="contact-cta">
-        <p class="section-label">Your first step</p>
-        <p>Every protocol begins with your story. Book your initial intake evaluation and let us read it carefully.</p>
-        <a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener" class="btn btn-light">Book Initial Evaluation</a>
+        <div class="contact-detail">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-value">
+            <a href="mailto:info@maisondesanteinstitute.com">info@maisondesanteinstitute.com</a>
+          </span>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-detail-label">Location</span>
+          <span class="contact-detail-value">Telehealth — Arizona Residents · Scottsdale Clinic Fall 2026</span>
+        </div>
       </div>
     </div>
   </div>
@@ -749,7 +709,6 @@ body { font-family:var(--font-sans); font-weight:300; color:var(--black); backgr
       <p class="footer-legal">© 2026 Maison de Santé PLLC · Scottsdale, Arizona · All rights reserved.</p>
       <ul class="footer-links">
         <li><a href="mailto:info@maisondesanteinstitute.com">Contact</a></li>
-        <li><a href="https://us.fullscript.com/welcome/wgrier" target="_blank" rel="noopener">Dispensary</a></li>
         <li><a href="https://www.optimantra.com/optimus/patient/patientaccess/prospects?pid=dXJmbGlmVVpsQVUzTWhPS0w5Y0NoQT09" target="_blank" rel="noopener">Book Now</a></li>
       </ul>
     </div>
